@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediSlot</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar" id="topbar" hidden>
+      <div class="brand">
+        <span class="brand-mark">MS</span>
+        <div>
+          <p class="brand-name">MediSlot</p>
+          <p class="brand-tag">Demo clinic scheduler</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="logged-in-user" class="user-chip"></span>
+        <button type="button" id="logout-btn" class="btn btn-ghost">Log out</button>
+      </div>
+    </header>
+
+    <!-- LOGIN -->
+    <section id="login-section" class="panel panel-centered" aria-labelledby="login-title">
+      <div class="login-card">
+        <p class="eyebrow">Clinic portal</p>
+        <h1 id="login-title">MediSlot</h1>
+        <p class="lede">Sign in to find a patient and book an appointment.</p>
+
+        <form id="login-form" novalidate>
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" autocomplete="username" required />
+
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+
+          <p id="login-error" class="error" role="alert" hidden></p>
+
+          <button type="submit" id="login-btn" class="btn btn-primary">Login</button>
+        </form>
+
+        <aside class="hint-box">
+          <p><strong>Demo credentials</strong></p>
+          <p>Username: <code>demo_admin</code></p>
+          <p>Password: <code>demo_pass_123</code></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- DASHBOARD / BOOKING FLOW -->
+    <section id="dashboard-section" class="panel" hidden aria-labelledby="dashboard-title">
+      <div class="layout">
+        <aside class="steps">
+          <h2 id="dashboard-title">Schedule appointment</h2>
+          <ol class="step-list">
+            <li data-step="1" class="step is-active">1. Find patient</li>
+            <li data-step="2" class="step">2. Choose doctor</li>
+            <li data-step="3" class="step">3. Pick date &amp; time</li>
+            <li data-step="4" class="step">4. Confirm</li>
+          </ol>
+        </aside>
+
+        <main class="workspace">
+          <!-- Patient search -->
+          <div id="step-patient" class="step-panel">
+            <h3>Patient search</h3>
+            <p class="muted">Search by patient name or ID.</p>
+
+            <div class="search-row">
+              <label for="patient-search" class="sr-only">Patient search</label>
+              <input
+                id="patient-search"
+                type="search"
+                placeholder="e.g. Ava Chen or P-1001"
+              />
+              <button type="button" id="patient-search-btn" class="btn btn-primary">Search</button>
+            </div>
+
+            <p id="patient-search-msg" class="muted" hidden></p>
+            <ul id="patient-results" class="result-list"></ul>
+          </div>
+
+          <!-- Doctor selection -->
+          <div id="step-doctor" class="step-panel" hidden>
+            <h3>Doctor selection</h3>
+            <p class="muted">Selected patient: <strong id="selected-patient-label">—</strong></p>
+            <ul id="doctor-list" class="result-list"></ul>
+            <button type="button" id="back-to-patient" class="btn btn-ghost">Back</button>
+          </div>
+
+          <!-- Appointment booking -->
+          <div id="step-appointment" class="step-panel" hidden>
+            <h3>Appointment booking</h3>
+            <p class="muted">
+              Patient: <strong id="booking-patient-label">—</strong> ·
+              Doctor: <strong id="booking-doctor-label">—</strong>
+            </p>
+
+            <label for="appointment-date">Available date</label>
+            <select id="appointment-date"></select>
+
+            <p class="label-like">Available time slots</p>
+            <div id="time-slots" class="slot-grid"></div>
+
+            <p id="booking-error" class="error" role="alert" hidden></p>
+
+            <div class="action-row">
+              <button type="button" id="back-to-doctor" class="btn btn-ghost">Back</button>
+              <button type="button" id="confirm-booking-btn" class="btn btn-primary" disabled>
+                Confirm appointment
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- CONFIRMATION -->
+    <section id="confirmation-section" class="panel panel-centered" hidden aria-labelledby="confirm-title">
+      <div class="confirm-card" id="confirmation-card">
+        <p class="eyebrow success">All set</p>
+        <h1 id="confirm-title">Appointment confirmed</h1>
+        <p class="lede">Here's the booking summary.</p>
+
+        <dl class="detail-grid">
+          <div>
+            <dt>Appointment ID</dt>
+            <dd id="confirm-appointment-id">—</dd>
+          </div>
+          <div>
+            <dt>Patient name</dt>
+            <dd id="confirm-patient-name">—</dd>
+          </div>
+          <div>
+            <dt>Doctor</dt>
+            <dd id="confirm-doctor">—</dd>
+          </div>
+          <div>
+            <dt>Date</dt>
+            <dd id="confirm-date">—</dd>
+          </div>
+          <div>
+            <dt>Time</dt>
+            <dd id="confirm-time">—</dd>
+          </div>
+        </dl>
+
+        <button type="button" id="book-another-btn" class="btn btn-primary">Book another appointment</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
